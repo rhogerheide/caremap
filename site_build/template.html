@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CAREMap County Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE work: a public data tool held to a newspaper graphics desk's restraint
+   IDEA a planning office's survey map: every county a parcel shaded by priority, with a ruled data sheet for the one you pick
+   PICTURE the national county map, full width of its column, tier colours, the clicked county outlined in black
+   COLOUR stone ground, black ink, brick for high priority, white panels; night is the same in umber
+   TYPE Schibsted Grotesk throughout, 800 for the finding
+   LAYOUT finding and four figures across the top; map left with the county sheet beside it; top lists, the Michigan check and the method below. Phone: title, map, sheet, lists */
+:root{color-scheme:light dark;--bg:light-dark(#e7e4df,#171513);--panel:light-dark(#fff,#201d1a);--ink:light-dark(#141414,#f1ede8);--muted:light-dark(#5b5650,#aaa39b);--rule:light-dark(#cfcac3,#3a3530);--brick:light-dark(#c8371e,#e8563b);--th:light-dark(#c8371e,#e0492f);--tm:light-dark(#ec9a83,#8f4434);--tl:light-dark(#fbfaf7,#2b2724);--tn:light-dark(#b8b2aa,#4a4540);--q1:light-dark(#fbfaf7,#2b2724);--q2:light-dark(#f3cfc3,#4d2f27);--q3:light-dark(#e59a82,#7c3b2b);--q4:light-dark(#d0583a,#b4452c);--q5:light-dark(#9e2a14,#ec6d4f)}
+:root[data-theme=light]{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 "Schibsted Grotesk",system-ui,sans-serif;overflow-x:clip}
+.band{padding:clamp(24px,3.5vw,52px) max(4vw,16px)}
+.wrap{max-width:1240px;margin:0 auto}
+h1{font-size:clamp(32px,4.6vw,50px);line-height:1.05;letter-spacing:-.02em;font-weight:800;margin:0 0 14px;text-wrap:balance;max-width:20ch}
+h2{font-size:26px;line-height:1.15;letter-spacing:-.01em;margin:0 0 10px;text-wrap:balance}
+p{margin:0 0 12px;max-width:68ch}
+.lede{font-size:17px;color:var(--muted)}
+.top{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:end}
+.figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.figs div{background:var(--panel);padding:14px 16px}
+.figs b{display:block;font-size:clamp(28px,3.4vw,40px);line-height:1;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+.figs span{font-size:14px;color:var(--muted);display:block;margin-top:6px;line-height:1.35}
+.figs .hot b{color:var(--brick)}
+.main{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(0,1fr);gap:20px;margin-top:26px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--rule)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:12px;border-bottom:1px solid var(--rule)}
+.seg{display:flex;flex-wrap:wrap;border:1px solid var(--ink)}
+.seg button{font:inherit;font-size:14px;font-weight:500;background:none;color:var(--ink);border:0;border-right:1px solid var(--ink);min-height:40px;padding:0 12px;cursor:pointer}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--panel)}
+.seg button:focus-visible,.zoom button:focus-visible,#q:focus-visible,.list tr:focus-visible{outline:3px solid var(--brick);outline-offset:2px}
+#q{font:inherit;font-size:16px;min-height:40px;padding:0 10px;border:1px solid var(--ink);background:var(--panel);color:var(--ink);width:min(260px,100%)}
+.map{position:relative;background:var(--bg)}
+.map svg{display:block;width:100%;height:auto;aspect-ratio:1000/626;touch-action:none;cursor:grab}
+.map svg.drag{cursor:grabbing}
+#cty path{stroke:var(--panel);stroke-width:.35px;vector-effect:non-scaling-stroke;cursor:pointer}
+#cty path:hover{stroke:var(--ink);stroke-width:1.2px}
+#st path{fill:none;stroke:var(--ink);stroke-opacity:.55;stroke-width:.9px;vector-effect:non-scaling-stroke;pointer-events:none}
+#sel{fill:none;stroke:var(--ink);stroke-width:2.6px;vector-effect:non-scaling-stroke;pointer-events:none}
+.th{fill:var(--th)}.tm{fill:var(--tm)}.tl{fill:var(--tl)}.tn{fill:var(--tn)}
+.q1{fill:var(--q1)}.q2{fill:var(--q2)}.q3{fill:var(--q3)}.q4{fill:var(--q4)}.q5{fill:var(--q5)}
+.zoom{position:absolute;right:10px;top:10px;display:grid;gap:4px}
+.zoom button{width:40px;height:40px;font:inherit;font-size:20px;line-height:1;background:var(--panel);color:var(--ink);border:1px solid var(--ink);cursor:pointer}
+#tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--panel);font-size:13px;padding:5px 8px;white-space:nowrap;display:none;z-index:2}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:10px 12px;border-top:1px solid var(--rule);font-size:14px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:14px;border:1px solid var(--rule);vertical-align:-2px;margin-right:6px}
+.sheet{padding:16px 16px 6px}
+.sheet h3{font-size:26px;line-height:1.1;margin:0;letter-spacing:-.01em}
+.where{color:var(--muted);font-size:14px;margin:4px 0 12px}
+.badge{display:inline-block;font-size:14px;font-weight:700;padding:3px 9px;border:1px solid var(--ink)}
+.badge.H{background:var(--th);color:#fff;border-color:var(--th)}
+.badge.M{background:var(--tm);border-color:var(--tm);color:light-dark(#141414,#fff)}
+.rows{margin:14px 0}
+.row{display:grid;grid-template-columns:8.5em minmax(0,1fr) 2.6em;gap:8px;align-items:center;font-size:14px;margin:7px 0}
+.row .track{height:12px;background:var(--bg);border:1px solid var(--rule)}
+.row .fill{height:100%;background:var(--brick)}
+.row b{text-align:right;font-variant-numeric:tabular-nums}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{padding:6px 4px;border-top:1px solid var(--rule);text-align:left;vertical-align:top}
+td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.flags{list-style:none;padding:0;margin:12px 0;font-size:14px}
+.flags li{padding:7px 0 7px 12px;border-left:3px solid var(--brick);margin:6px 0;background:var(--bg)}
+.lists{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:14px}
+.list{padding:14px}
+.list h3{margin:0 0 8px;font-size:18px}
+.list tr{cursor:pointer}
+.list tbody tr:hover td{background:var(--bg)}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.small{font-size:14px;color:var(--muted)}
+.scroll{overflow-x:auto}
+footer{border-top:1px solid var(--rule)}
+@media(max-width:900px){.top,.main,.cols{grid-template-columns:minmax(0,1fr)}.lists{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.figs b{font-size:28px}.seg button{padding:0 9px;font-size:13px}.row{grid-template-columns:7em minmax(0,1fr) 2.4em}th,td{padding:6px 3px}.hide-s{display:none}}
+</style>
+</head>
+<body>
+<header class="band">
+  <div class="wrap top">
+    <div>
+      <h1 id="title">Counties where childcare shortages and housing costs hit at once</h1>
+      <p class="lede">CAREMap scores every U.S. county on childcare supply and on housing pressure for both families and childcare workers, then marks the places where both are severe. Those are the places where housing designed for home-based childcare providers could do the most good.</p>
+    </div>
+    <div class="figs" id="figs"></div>
+  </div>
+</header>
+
+<main class="band" style="padding-top:0">
+  <div class="wrap">
+    <div class="main">
+      <section class="card" aria-label="County map">
+        <div class="bar">
+          <div class="seg" id="layers" role="group" aria-label="Map layer">
+            <button type="button" data-l="tier" aria-pressed="true">Priority</button>
+            <button type="button" data-l="cc" aria-pressed="false">Childcare</button>
+            <button type="button" data-l="hs" aria-pressed="false">Housing</button>
+            <button type="button" data-l="prs" aria-pressed="false">Worker rent</button>
+          </div>
+          <label for="q" class="small" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">Find a county
+            <input id="q" list="names" placeholder="e.g. Macomb County, MI" autocomplete="off">
+          </label>
+          <datalist id="names"></datalist>
+        </div>
+        <div class="map" id="map">
+          <svg id="svg" viewBox="0 0 1000 626" role="img" aria-label="Map of U.S. counties shaded by the selected layer">
+            <g id="cty"></g><g id="st"></g><path id="sel" d=""></path>
+          </svg>
+          <div class="zoom">
+            <button type="button" id="zin" aria-label="Zoom in">+</button>
+            <button type="button" id="zout" aria-label="Zoom out">&minus;</button>
+            <button type="button" id="zreset" aria-label="Reset view" style="font-size:14px">&#8634;</button>
+          </div>
+          <div id="tip"></div>
+        </div>
+        <div class="legend" id="legend"></div>
+      </section>
+      <aside class="card sheet" id="sheet" aria-live="polite"></aside>
+    </div>
+
+    <section style="margin-top:36px">
+      <h2>The strongest candidates</h2>
+      <p>Ranked within their own group, because metro and rural counties differ on every measure. Stability is how often a county stays in its group's top quarter across 1,000 random weightings of the measures. Click a row to see it on the map.</p>
+      <div class="lists" id="lists"></div>
+    </section>
+  </div>
+</main>
+
+<section class="band" style="background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+  <div class="wrap cols">
+    <div>
+      <h2>A childcare worker can't comfortably rent anywhere</h2>
+      <p id="prsText"></p>
+      <p class="small">Rent is HUD's FY2027 2-bedroom Fair Market Rent. Pay is the BLS May 2025 median for childcare workers in the county's metro or nonmetro area. Wages cover employees, so they stand in for what home-based providers earn.</p>
+    </div>
+    <div>
+      <h2>Checked against Michigan's licensed slots</h2>
+      <p id="miText"></p>
+      <div class="scroll"><table id="miTable"></table></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap cols">
+    <div>
+      <h2>How the scores work</h2>
+      <p><b>Childcare score:</b> children under 5 per childcare worker (paid staff from County Business Patterns plus home-based solo providers from Nonemployer Statistics), smoothed for small counties, as a percentile within the county's group. Where the Census withholds a county's business count (0 to 2 businesses), it is scored under both 0 and 2 and the two are averaged.</p>
+      <p><b>Housing score:</b> half families (share of renters paying 30% or more of income; median home value to median income) and half providers (2-bedroom rent as a share of a childcare worker's pay), as a percentile within the group.</p>
+      <p><b>Priority:</b> High means both scores are in the group's top 25% whichever withheld-count assumption is used. Medium means the combined score (the geometric mean of the two, so a county must be high on both) is in the top 25%. Counties with fewer than 100 children under 5 are not scored.</p>
+    </div>
+    <div>
+      <h2>What it can't tell you</h2>
+      <p>Scores show where combined need is greatest, not where an intervention is proven to work. Childcare supply is measured in workers, not licensed slots, and is least reliable in rural counties whose business counts are withheld. County averages hide neighborhoods: Wayne County is one value here. College counties are flagged because student incomes inflate rent burden.</p>
+      <p class="small">Data: Census ACS 2020–2024 5-year, County Business Patterns 2023, Nonemployer Statistics 2023, Vintage 2025 population estimates, 2024 county boundaries; HUD FY2027 Fair Market Rents; BLS OEWS May 2025; USDA 2023 Rural-Urban Continuum Codes; Michigan MiLEAP child care licensing.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="band"><div class="wrap small">CAREMap v1 · Built by Ric Hogerheide · Inspired by Rural Homes' housing designed around home-based childcare in Colorado</div></footer>
+
+<script>
+const PAYLOAD = __DATA__;
+const MIV = __MIV__;
+{
+const D = PAYLOAD.data, G = PAYLOAD.groups;
+const I = {name:0,st:1,grp:2,tier:3,cc:4,hs:5,comb:6,rank:7,stable:8,kids:9,rb:10,pti:11,prs:12,fmr:13,wage:14,kL:15,kH:16,pop:17,col:18,wh:19,wi:20,cf:21,tu:22,miCap:23,miKps:24,prP:25,rbP:26,ptiP:27};
+const TIER = {H:"High priority",M:"Medium priority",L:"Low priority",N:"Not scored"};
+const GRP = {M:"metro",N:"rural (nonmetro)"};
+const ids = Object.keys(D);
+const fmt = (v, d=0) => v == null ? "–" : v.toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+const median = a => { const s=[...a].sort((x,y)=>x-y), m=s.length>>1; return s.length%2?s[m]:(s[m-1]+s[m])/2; };
+const label = id => `${D[id][I.name]}, ${D[id][I.st]}`;
+
+const nH = ids.filter(i=>D[i][I.tier]==="H").length, nM = ids.filter(i=>D[i][I.tier]==="M").length;
+const prs = ids.map(i=>D[i][I.prs]).filter(v=>v!=null);
+const burdened = prs.filter(v=>v>30).length / prs.length, half = prs.filter(v=>v>50).length / prs.length;
+const prsMed = median(prs);
+document.getElementById("title").textContent = `${nH} counties where childcare shortages and housing costs hit at once`;
+document.getElementById("figs").innerHTML = [
+  ["hot", fmt(nH), "High-priority counties: both problems in their group's top quarter"],
+  ["", fmt(nM), "more at Medium priority on the combined score"],
+  ["hot", `${Math.round(burdened*100)}%`, "of counties where 2-bedroom rent tops 30% of a childcare worker's pay"],
+  ["", `${Math.round(prsMed)}%`, "of pay that rent takes in the typical county"]
+].map(([c,b,s])=>`<div class="${c}"><b>${b}</b><span>${s}</span></div>`).join("");
+document.getElementById("prsText").textContent = `In ${Math.round(burdened*100)}% of the ${fmt(prs.length)} counties, a year of 2-bedroom rent costs more than 30% of a median-paid childcare worker's income, HUD's line for being cost-burdened. In the typical county it's ${Math.round(prsMed)}%, and in ${Math.round(half*100)}% of counties it's more than half. That gap is why the provider side carries half the housing score.`;
+
+const all = MIV.find(r=>r.key==="all"), met = MIV.find(r=>r.key==="metro"), wh = MIV.find(r=>r.key==="withheld");
+document.getElementById("miText").textContent = `Michigan publishes every licensed provider's capacity, so its ${all.counties} scored counties test whether a worker count stands in for real slots. The childcare score moves with licensed slots per child (rank correlation ${all.score.toFixed(2)}; ${met.score.toFixed(2)} in metro counties; negative is the right direction). It fails where the Census withholds business counts (${wh.score.toFixed(2)}, ${wh.counties} counties), which is why those counties show a range.`;
+document.getElementById("miTable").innerHTML = `<thead><tr><th>Michigan counties</th><th class="n">Counties</th><th class="n">Score vs. licensed slots</th></tr></thead><tbody>${MIV.map(r=>`<tr><td>${r.subset}</td><td class="n">${r.counties}</td><td class="n">${r.score.toFixed(2)}</td></tr>`).join("")}</tbody>`;
+
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("svg"), cty = document.getElementById("cty"), st = document.getElementById("st"), sel = document.getElementById("sel");
+const pathOf = {};
+cty.innerHTML = PAYLOAD.counties.map(([g,d])=>`<path data-g="${g}" d="${d}"></path>`).join("");
+st.innerHTML = PAYLOAD.states.map(([s,d])=>`<path d="${d}"></path>`).join("");
+cty.querySelectorAll("path").forEach(p=>pathOf[p.dataset.g]=p);
+document.getElementById("names").innerHTML = ids.map(i=>`<option value="${label(i)}">`).join("");
+
+const LAYERS = {
+  tier:{cls:i=>({H:"th",M:"tm",L:"tl",N:"tn"})[D[i][I.tier]], legend:[["th","High priority"],["tm","Medium"],["tl","Low"],["tn","Not scored (under 100 young children)"]]},
+  cc:{cls:i=>q(D[i][I.cc],[25,50,75,90]), legend:[["q1","Bottom quarter"],["q2","25–50"],["q3","50–75"],["q4","75–90"],["q5","Top 10%: worst shortage"],["tn","Not scored"]]},
+  hs:{cls:i=>q(D[i][I.hs],[25,50,75,90]), legend:[["q1","Bottom quarter"],["q2","25–50"],["q3","50–75"],["q4","75–90"],["q5","Top 10%: most pressure"],["tn","Not scored"]]},
+  prs:{cls:i=>q(D[i][I.prs],[40,50,60,75]), legend:[["q1","Under 40% of pay"],["q2","40–50%"],["q3","50–60%"],["q4","60–75%"],["q5","Over 75%"]]}
+};
+function q(v, cuts){ if (v==null) return "tn"; let k=0; while(k<cuts.length && v>=cuts[k]) k++; return "q"+(k+1); }
+let layer = "tier";
+function paint(){
+  const L = LAYERS[layer];
+  for (const g in pathOf) pathOf[g].setAttribute("class", D[g] ? L.cls(g) : "tn");
+  document.getElementById("legend").innerHTML = L.legend.map(([c,t])=>`<span><i style="background:var(--${c})"></i>${t}</span>`).join("");
+}
+document.getElementById("layers").addEventListener("click", e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  layer = b.dataset.l;
+  document.querySelectorAll("#layers button").forEach(x=>x.setAttribute("aria-pressed", x===b));
+  paint();
+});
+
+let vb = {x:0,y:0,w:1000,h:626};
+const setVB = () => svg.setAttribute("viewBox", `${vb.x} ${vb.y} ${vb.w} ${vb.h}`);
+function zoom(f, cx=vb.x+vb.w/2, cy=vb.y+vb.h/2){
+  const w = Math.min(1000, Math.max(1000/16, vb.w*f)), h = w*0.626;
+  vb = {x: cx-(cx-vb.x)*(w/vb.w), y: cy-(cy-vb.y)*(h/vb.h), w, h};
+  if (w===1000) vb = {x:0,y:0,w:1000,h:626};
+  setVB();
+}
+function toSvg(e){ const r = svg.getBoundingClientRect(); return {x: vb.x+(e.clientX-r.left)/r.width*vb.w, y: vb.y+(e.clientY-r.top)/r.height*vb.h}; }
+document.getElementById("zin").onclick = ()=>zoom(1/1.6);
+document.getElementById("zout").onclick = ()=>zoom(1.6);
+document.getElementById("zreset").onclick = ()=>{vb={x:0,y:0,w:1000,h:626};setVB();};
+svg.addEventListener("wheel", e=>{ e.preventDefault(); const p=toSvg(e); zoom(e.deltaY>0?1.25:0.8, p.x, p.y); }, {passive:false});
+let drag = null;
+svg.addEventListener("pointerdown", e=>{ drag = {x:e.clientX,y:e.clientY,vb:{...vb},moved:false}; });
+window.addEventListener("pointermove", e=>{
+  if (!drag) return;
+  const dx=e.clientX-drag.x, dy=e.clientY-drag.y;
+  if (!drag.moved && Math.hypot(dx,dy)<5) return;
+  drag.moved = true; svg.classList.add("drag");
+  const r = svg.getBoundingClientRect();
+  vb.x = drag.vb.x - dx/r.width*vb.w; vb.y = drag.vb.y - dy/r.height*vb.h; setVB();
+});
+window.addEventListener("pointerup", e=>{
+  if (drag && !drag.moved){ const p = e.target.closest && e.target.closest("#cty path"); if (p) select(p.dataset.g); }
+  drag = null; svg.classList.remove("drag");
+});
+
+const tip = document.getElementById("tip"), mapEl = document.getElementById("map");
+cty.addEventListener("pointermove", e=>{
+  const p = e.target.closest("path"); if (!p || !D[p.dataset.g] || e.pointerType==="touch") { tip.style.display="none"; return; }
+  const r = mapEl.getBoundingClientRect(), g = p.dataset.g;
+  tip.textContent = `${label(g)} · ${TIER[D[g][I.tier]]}`;
+  tip.style.display = "block";
+  const x = Math.min(e.clientX-r.left+12, r.width-tip.offsetWidth-4);
+  tip.style.left = x+"px"; tip.style.top = (e.clientY-r.top+14)+"px";
+});
+cty.addEventListener("pointerleave", ()=>tip.style.display="none");
+
+function bar(name, v){ return `<div class="row"><span>${name}</span><div class="track"><div class="fill" style="width:${v==null?0:v}%"></div></div><b>${v==null?"–":Math.round(v)}</b></div>`; }
+function select(g, zoomTo){
+  const d = D[g]; if (!d) return;
+  sel.setAttribute("d", pathOf[g].getAttribute("d"));
+  if (zoomTo){
+    const b = pathOf[g].getBBox(), w = Math.min(1000, Math.max(110, b.width*6)), h = w*0.626;
+    vb = {x:b.x+b.width/2-w/2, y:b.y+b.height/2-h/2, w, h}; setVB();
+  }
+  const scored = d[I.tier] !== "N";
+  const kpw = d[I.wh] ? `${fmt(d[I.kL])} – ${fmt(d[I.kH])}` : fmt(d[I.kL]);
+  const flags = [];
+  if (d[I.wh]) flags.push("The Census withholds this county's count of childcare businesses with staff (it has 0 to 2), so kids per worker is shown as a range.");
+  if (d[I.tu]) flags.push("Its priority depends on that withheld count; the lower tier is shown.");
+  if (d[I.cf]) flags.push(`College county: ${fmt(d[I.col])}% of residents are enrolled, which can inflate rent burden.`);
+  if (d[I.wi]) flags.push("BLS publishes no childcare wage for this area; the state's median is used.");
+  if (scored && d[I.stable]!=null && d[I.stable]>=0.9) flags.push(`Robust: in its group's top quarter under ${Math.round(d[I.stable]*100)}% of 1,000 weightings.`);
+  const rows = [
+    ["Children under 5", fmt(d[I.kids])],
+    ["Children per childcare worker", kpw],
+    ["Renters paying 30%+ of income", d[I.rb]==null?"–":fmt(d[I.rb])+"%"],
+    ["Home value to income", d[I.pti]==null?"–":fmt(d[I.pti],1)+"×"],
+    ["2-bedroom Fair Market Rent", d[I.fmr]==null?"–":"$"+fmt(d[I.fmr])+"/mo"],
+    ["Childcare worker median pay", d[I.wage]==null?"–":"$"+fmt(d[I.wage])+"/yr"],
+    ["Rent as share of that pay", d[I.prs]==null?"–":fmt(d[I.prs])+"%"],
+    ["Population change 2020–25", d[I.pop]==null?"–":(d[I.pop]>0?"+":"")+fmt(d[I.pop],1)+"%"]
+  ];
+  if (d[I.miCap]!=null) rows.push(["Licensed childcare slots (MI)", fmt(d[I.miCap])], ["Young children per licensed slot", fmt(d[I.miKps],2)]);
+  document.getElementById("sheet").innerHTML = `
+    <h3>${d[I.name]}</h3>
+    <div class="where">${d[I.st]} · ${GRP[d[I.grp]]} county${scored&&d[I.rank]?` · ranked ${fmt(d[I.rank])} of ${fmt(G[d[I.grp]==="M"?"Metro":"Nonmetro"])}`:""}</div>
+    <span class="badge ${d[I.tier]}">${TIER[d[I.tier]]}</span>
+    ${scored ? `<div class="rows">${bar("Childcare",d[I.cc])}${bar("Housing",d[I.hs])}${bar("Combined",d[I.comb])}</div>
+    <p class="small" style="margin:0 0 6px">Percentiles within ${GRP[d[I.grp]]} counties; 100 = most need.</p>` : `<p class="small" style="margin:12px 0">Fewer than 100 children under 5, too few to score reliably.</p>`}
+    <table><tbody>${rows.map(([k,v])=>`<tr><td>${k}</td><td class="n">${v}</td></tr>`).join("")}</tbody></table>
+    ${flags.length?`<ul class="flags">${flags.map(f=>`<li>${f}</li>`).join("")}</ul>`:""}`;
+}
+document.getElementById("q").addEventListener("change", e=>{
+  const v = e.target.value.trim().toLowerCase();
+  const g = ids.find(i=>label(i).toLowerCase()===v) || ids.find(i=>label(i).toLowerCase().startsWith(v));
+  if (g) select(g, true);
+});
+
+function list(grp, title){
+  const top = ids.filter(i=>D[i][I.grp]===grp && D[i][I.tier]!=="N").sort((a,b)=>D[a][I.rank]-D[b][I.rank]).slice(0,12);
+  return `<div class="card list"><h3>${title}</h3><div class="scroll"><table><thead><tr><th class="n">#</th><th>County</th><th class="n">Child&shy;care</th><th class="n">Hous&shy;ing</th><th class="n hide-s">Stable</th></tr></thead><tbody>${
+    top.map(i=>`<tr tabindex="0" data-g="${i}"><td class="n">${D[i][I.rank]}</td><td>${label(i)}${D[i][I.cf]?" *":""}</td><td class="n">${Math.round(D[i][I.cc])}</td><td class="n">${Math.round(D[i][I.hs])}</td><td class="n hide-s">${Math.round(D[i][I.stable]*100)}%</td></tr>`).join("")
+  }</tbody></table></div></div>`;
+}
+const lists = document.getElementById("lists");
+lists.innerHTML = list("M","Metro counties") + list("N","Rural counties");
+if (/\*/.test(lists.textContent)) lists.insertAdjacentHTML("afterend", `<p class="small" style="margin-top:8px">* College county: student incomes can inflate rent burden.</p>`);
+const pick = e=>{ const r = e.target.closest("tr[data-g]"); if (!r) return; select(r.dataset.g, true); document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"}); };
+lists.addEventListener("click", pick);
+lists.addEventListener("keydown", e=>{ if (e.key==="Enter") pick(e); });
+
+paint();
+select(ids.filter(i=>D[i][I.tier]==="H").sort((a,b)=>D[b][I.comb]-D[a][I.comb])[0]);
+}
+</script>
+</body>
+</html>

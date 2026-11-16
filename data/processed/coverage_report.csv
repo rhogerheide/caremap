@@ -1,0 +1,12 @@
+source,counties_with_value,counties_missing,what_missing_means,codes_not_on_master_list,connecticut_present
+ACS kids under 5,3144,0,missing,0,9
+ACS rent burden share,3144,0,missing,0,9
+ACS price-to-income,3138,6,missing,0,9
+ACS rental vacancy rate,3144,0,missing,0,9
+CBP 2023 childcare employees,2216,928,"not published: CBP withholds counties with fewer than 3 businesses (0, 1 or 2)",9,9
+NES 2023 childcare solo providers,3009,135,not listed (likely zero),0,9
+USDA rural-urban code 2023,3144,0,missing,11,9
+Population change 2020-2025,3144,0,missing,0,9
+ACS college enrollment share,3144,0,missing,0,9
+HUD 2-bedroom Fair Market Rent FY2027,3144,0,missing,7,9
+BLS childcare worker median wage May 2025,3144,0,missing,0,9
