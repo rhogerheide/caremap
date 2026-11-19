@@ -5,11 +5,20 @@ from pathlib import Path
 
 import pandas as pd
 
-scores_csv, mi_csv, counties_geo, states_geo, out = map(Path, sys.argv[1:6])
+scores_csv, mi_csv, fit_csv, clusters_csv, counties_geo, states_geo, out = map(Path, sys.argv[1:8])
 
 s = pd.read_csv(scores_csv, dtype={"GEOID": str})
 mi = pd.read_csv(mi_csv, dtype={"GEOID": str})[["GEOID", "mi_licensed_capacity", "kids_per_slot"]]
-s = s.merge(mi, on="GEOID", how="left")
+fit = pd.read_csv(fit_csv, dtype={"GEOID": str})[["GEOID", "fit", "fit_points", "F1_population", "F2_price_above_model",
+                                                   "F3_provider_pool", "F4_group_home_license", "median_home_value"]]
+clu = pd.read_csv(clusters_csv, dtype={"GEOID": str})[["GEOID", "lisa"]]
+s = s.merge(mi, on="GEOID", how="left").merge(fit, on="GEOID", how="left").merge(clu, on="GEOID", how="left")
+LISA = {"Hot spot": "H", "Cold spot": "C", "High outlier": "h", "Low outlier": "l"}
+FIT = {"Strong": "S", "Possible": "P", "Weak": "W"}
+
+
+def b(x):
+    return 1 if str(x) == "True" else 0
 
 group_sizes = s[~s["screened_out"]].groupby("group").size().to_dict()
 tier_code = {"High": "H", "Medium": "M", "Low": "L", "Not scored": "N"}
@@ -39,6 +48,9 @@ for _, row in s.iterrows():
         int(bool(row["tier_uncertain"])) if not pd.isna(row["tier_uncertain"]) else 0,
         r(row["mi_licensed_capacity"], 0), r(row["kids_per_slot"], 2),
         r(row["provider_rent_pctile"]), r(row["rent_burden_pctile"]), r(row["price_to_income_pctile"]),
+        b(row["high_if_zero"]), FIT.get(row["fit"], ""), None if pd.isna(row["fit_points"]) else int(row["fit_points"]),
+        b(row["F1_population"]), b(row["F2_price_above_model"]), b(row["F3_provider_pool"]), b(row["F4_group_home_license"]),
+        LISA.get(row["lisa"], ""), r(row["median_home_value"], 0),
     ]
 
 

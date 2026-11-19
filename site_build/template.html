@@ -14,7 +14,7 @@
    COLOUR stone ground, black ink, brick for high priority, white panels; night is the same in umber
    TYPE Schibsted Grotesk throughout, 800 for the finding
    LAYOUT finding and four figures across the top; map left with the county sheet beside it; top lists, the Michigan check and the method below. Phone: title, map, sheet, lists */
-:root{color-scheme:light dark;--bg:light-dark(#e7e4df,#171513);--panel:light-dark(#fff,#201d1a);--ink:light-dark(#141414,#f1ede8);--muted:light-dark(#5b5650,#aaa39b);--rule:light-dark(#cfcac3,#3a3530);--brick:light-dark(#c8371e,#e8563b);--th:light-dark(#c8371e,#e0492f);--tm:light-dark(#ec9a83,#8f4434);--tl:light-dark(#fbfaf7,#2b2724);--tn:light-dark(#b8b2aa,#4a4540);--q1:light-dark(#fbfaf7,#2b2724);--q2:light-dark(#f3cfc3,#4d2f27);--q3:light-dark(#e59a82,#7c3b2b);--q4:light-dark(#d0583a,#b4452c);--q5:light-dark(#9e2a14,#ec6d4f)}
+:root{color-scheme:light dark;--sky:light-dark(#f4e9e1,#221d1a);--m1:light-dark(#cfc8c0,#3a332e);--m2:light-dark(#b3aaa0,#2f2925);--m3:light-dark(#8f857b,#262120);--house:light-dark(#fbfaf7,#3b3530);--roof:light-dark(#4a4440,#151311);--bg:light-dark(#e7e4df,#171513);--panel:light-dark(#fff,#201d1a);--ink:light-dark(#141414,#f1ede8);--muted:light-dark(#5b5650,#aaa39b);--rule:light-dark(#cfcac3,#3a3530);--brick:light-dark(#c8371e,#e8563b);--th:light-dark(#c8371e,#e0492f);--tm:light-dark(#ec9a83,#8f4434);--tl:light-dark(#fbfaf7,#2b2724);--tn:light-dark(#b8b2aa,#4a4540);--q1:light-dark(#fbfaf7,#2b2724);--q2:light-dark(#f3cfc3,#4d2f27);--q3:light-dark(#e59a82,#7c3b2b);--q4:light-dark(#d0583a,#b4452c);--q5:light-dark(#9e2a14,#ec6d4f);--thu:light-dark(#f6d3c8,#4a2a22);--fs:light-dark(#2f5d50,#6fb39c);--fp:light-dark(#8fb3a5,#3f6b5d);--fw:light-dark(#e3ddd3,#3a3530);--fx:light-dark(#f6f4f0,#24201d);--hot:light-dark(#c8371e,#e8563b);--hout:light-dark(#ec9a83,#8f4434);--lout:light-dark(#a9bdd3,#3b4f66);--cold:light-dark(#3e5c7e,#7f9fc4)}
 :root[data-theme=light]{color-scheme:light}
 :root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
@@ -48,18 +48,21 @@ p{margin:0 0 12px;max-width:68ch}
 #cty path:hover{stroke:var(--ink);stroke-width:1.2px}
 #st path{fill:none;stroke:var(--ink);stroke-opacity:.55;stroke-width:.9px;vector-effect:non-scaling-stroke;pointer-events:none}
 #sel{fill:none;stroke:var(--ink);stroke-width:2.6px;vector-effect:non-scaling-stroke;pointer-events:none}
-.th{fill:var(--th)}.tm{fill:var(--tm)}.tl{fill:var(--tl)}.tn{fill:var(--tn)}
+.th{fill:var(--th)}.thu{fill:url(#hatch)}.tm{fill:var(--tm)}.tl{fill:var(--tl)}.tn{fill:var(--tn)}
+.fs{fill:var(--fs)}.fp{fill:var(--fp)}.fw{fill:var(--fw)}.fx{fill:var(--fx)}.hot{fill:var(--hot)}.hout{fill:var(--hout)}.lout{fill:var(--lout)}.cold{fill:var(--cold)}
 .q1{fill:var(--q1)}.q2{fill:var(--q2)}.q3{fill:var(--q3)}.q4{fill:var(--q4)}.q5{fill:var(--q5)}
 .zoom{position:absolute;right:10px;top:10px;display:grid;gap:4px}
 .zoom button{width:40px;height:40px;font:inherit;font-size:20px;line-height:1;background:var(--panel);color:var(--ink);border:1px solid var(--ink);cursor:pointer}
 #tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--panel);font-size:13px;padding:5px 8px;white-space:nowrap;display:none;z-index:2}
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;padding:10px 12px;border-top:1px solid var(--rule);font-size:14px;color:var(--muted)}
 .legend i{display:inline-block;width:14px;height:14px;border:1px solid var(--rule);vertical-align:-2px;margin-right:6px}
+.legend i.hatch,.sw-hatch{background:repeating-linear-gradient(135deg,var(--th) 0 2px,var(--thu) 2px 5px)!important}
 .sheet{padding:16px 16px 6px}
 .sheet h3{font-size:26px;line-height:1.1;margin:0;letter-spacing:-.01em}
 .where{color:var(--muted);font-size:14px;margin:4px 0 12px}
 .badge{display:inline-block;font-size:14px;font-weight:700;padding:3px 9px;border:1px solid var(--ink)}
 .badge.H{background:var(--th);color:#fff;border-color:var(--th)}
+.badge.U{background:var(--panel);border:2px dashed var(--th);color:var(--th)}
 .badge.M{background:var(--tm);border-color:var(--tm);color:light-dark(#141414,#fff)}
 .rows{margin:14px 0}
 .row{display:grid;grid-template-columns:8.5em minmax(0,1fr) 2.6em;gap:8px;align-items:center;font-size:14px;margin:7px 0}
@@ -82,14 +85,64 @@ td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 footer{border-top:1px solid var(--rule)}
 @media(max-width:900px){.top,.main,.cols{grid-template-columns:minmax(0,1fr)}.lists{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.figs b{font-size:28px}.seg button{padding:0 9px;font-size:13px}.row{grid-template-columns:7em minmax(0,1fr) 2.4em}th,td{padding:6px 3px}.hide-s{display:none}}
+.nav{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:15px;font-weight:500;margin-bottom:26px}
+.nav a{color:var(--ink);text-decoration:none;border-bottom:2px solid transparent;padding:4px 0}
+.nav a:hover,.nav a:focus-visible{border-bottom-color:var(--brick);outline:none}
+.nav b{font-weight:800;margin-right:8px}
+.story{background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.story .intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:36px;align-items:center}
+.scene{width:100%;height:auto;display:block}
+.cap{font-size:14px;color:var(--muted);margin-top:8px}
+.quote{font-size:clamp(22px,2.4vw,28px);line-height:1.3;font-weight:700;border-left:4px solid var(--brick);padding:4px 0 4px 18px;margin:18px 0;max-width:30ch}
+.quote span{display:block;font-size:14px;font-weight:400;color:var(--muted);margin-top:8px}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:30px}
+.steps div{background:var(--bg);padding:18px}
+.steps b{display:block;font-size:13px;color:var(--brick);font-weight:800;margin-bottom:6px}
+.steps h3{font-size:18px;margin:0 0 6px;line-height:1.25}
+.steps p{font-size:15px;margin:0}
+.honest{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;margin-top:30px}
+.why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:20px}
+.why div{border-top:3px solid var(--ink);padding-top:14px}
+.why .n{font-size:clamp(34px,4vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em;color:var(--brick);display:block;margin-bottom:8px}
+.why p{font-size:16px}
+.loop{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:26px;font-size:15px;font-weight:500}
+.loop span{background:var(--panel);border:1px solid var(--rule);padding:8px 12px}
+.loop i{font-style:normal;color:var(--brick);font-weight:800}
+.srcs{font-size:14px;color:var(--muted);columns:2;column-gap:36px;padding-left:18px;margin:10px 0 0}
+.srcs li{margin-bottom:6px;break-inside:avoid}
+.srcs a,footer a{color:var(--ink)}
+@media(max-width:900px){.story .intro,.honest{grid-template-columns:minmax(0,1fr)}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.why{grid-template-columns:minmax(0,1fr)}.srcs{columns:1}}
+@media(max-width:520px){.steps{grid-template-columns:minmax(0,1fr)}}
+.fitbox{margin:14px 0 6px;padding:12px;background:var(--bg);border:1px solid var(--rule)}
+.fitbox h4{margin:0 0 6px;font-size:15px}
+.fitbox ul{list-style:none;padding:0;margin:0;font-size:14px}
+.fitbox li{padding:3px 0 3px 22px;position:relative}
+.fitbox li::before{position:absolute;left:0;font-weight:800}
+.fitbox li.y::before{content:"✓";color:var(--fs)}
+.fitbox li.n::before{content:"✗";color:var(--brick)}
+.fitchip{display:inline-block;font-size:13px;font-weight:700;padding:1px 7px;border:1px solid var(--fs);margin-left:6px}
+.fitchip.S{background:var(--fs);color:light-dark(#fff,#141414)}.fitchip.P{background:var(--fp);border-color:var(--fp);color:light-dark(#141414,#fff)}.fitchip.W{background:var(--fw);border-color:var(--rule);color:var(--ink)}
+.finds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:20px}
+.finds div{border-top:3px solid var(--ink);padding-top:14px}
+.finds .n{font-size:clamp(30px,3.6vw,42px);font-weight:800;line-height:1;letter-spacing:-.02em;color:var(--brick);display:block;margin-bottom:8px}
+.cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:20px}
+.case{padding:18px;display:flex;flex-direction:column}
+.case h3{margin:0;font-size:22px;line-height:1.15}
+.case .meta{font-size:14px;color:var(--muted);margin:4px 0 12px}
+.case .verdict{font-weight:700;font-size:17px;line-height:1.35;margin:0 0 10px}
+.case p{font-size:15px}
+.case button{margin-top:auto;align-self:flex-start;font:inherit;font-size:14px;font-weight:500;min-height:40px;padding:0 14px;background:none;color:var(--ink);border:1px solid var(--ink);cursor:pointer}
+.case button:hover,.case button:focus-visible{background:var(--ink);color:var(--panel);outline:none}
+@media(max-width:900px){.finds,.cases{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
 <header class="band">
+  <nav class="wrap nav" aria-label="Sections"><b>CAREMap</b><a href="#map-section">Map</a><a href="#story">The Ouray story</a><a href="#why">Why both problems</a><a href="#candidates">Top counties</a><a href="#findings">Findings</a><a href="#cases">Case studies</a><a href="#method">Method</a><a href="#about">About</a></nav>
   <div class="wrap top">
     <div>
       <h1 id="title">Counties where childcare shortages and housing costs hit at once</h1>
-      <p class="lede">CAREMap scores every U.S. county on childcare supply and on housing pressure for both families and childcare workers, then marks the places where both are severe. Those are the places where housing designed for home-based childcare providers could do the most good.</p>
+      <p class="lede">CAREMap scores every U.S. county on childcare supply and on housing pressure for both families and childcare workers, then marks the places where both are severe and checks how well an Ouray-style project would fit each one. It grew out of one street in Ouray, Colorado, where affordable homes were built so childcare providers could live and work in them. The question here is where else that idea could help.</p>
     </div>
     <div class="figs" id="figs"></div>
   </div>
@@ -98,13 +151,15 @@ footer{border-top:1px solid var(--rule)}
 <main class="band" style="padding-top:0">
   <div class="wrap">
     <div class="main">
-      <section class="card" aria-label="County map">
+      <section class="card" aria-label="County map" id="map-section">
         <div class="bar">
           <div class="seg" id="layers" role="group" aria-label="Map layer">
             <button type="button" data-l="tier" aria-pressed="true">Priority</button>
             <button type="button" data-l="cc" aria-pressed="false">Childcare</button>
             <button type="button" data-l="hs" aria-pressed="false">Housing</button>
             <button type="button" data-l="prs" aria-pressed="false">Worker rent</button>
+            <button type="button" data-l="fit" aria-pressed="false">Fit</button>
+            <button type="button" data-l="lisa" aria-pressed="false">Hot spots</button>
           </div>
           <label for="q" class="small" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">Find a county
             <input id="q" list="names" placeholder="e.g. Macomb County, MI" autocomplete="off">
@@ -113,7 +168,7 @@ footer{border-top:1px solid var(--rule)}
         </div>
         <div class="map" id="map">
           <svg id="svg" viewBox="0 0 1000 626" role="img" aria-label="Map of U.S. counties shaded by the selected layer">
-            <g id="cty"></g><g id="st"></g><path id="sel" d=""></path>
+            <defs><pattern id="hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" style="fill:var(--thu)"/><rect width="2" height="5" style="fill:var(--th)"/></pattern></defs><g id="cty"></g><g id="st"></g><path id="sel" d=""></path>
           </svg>
           <div class="zoom">
             <button type="button" id="zin" aria-label="Zoom in">+</button>
@@ -126,10 +181,81 @@ footer{border-top:1px solid var(--rule)}
       </section>
       <aside class="card sheet" id="sheet" aria-live="polite"></aside>
     </div>
+  </div>
+</main>
 
-    <section style="margin-top:36px">
+<section class="band story" id="story">
+  <div class="wrap">
+    <div class="intro">
+      <div>
+        <h2>It started on one street in Ouray, Colorado</h2>
+        <p>Ouray County is a small mountain county near Telluride. When the project began, it had 158 children under 5 and 55 childcare slots, and in a 2022 survey four in five families said their childcare didn't meet their needs. One family drove nearly three hours a day to reach daycare in Montrose.</p>
+        <p>Rural Homes, a nonprofit housing developer, and Bright Futures, the region's early childhood council, decided to treat the housing shortage and the childcare shortage as one problem.</p>
+        <p class="quote">“Well, can we solve both of them at the same time?”<span>Paul Major, founder of Rural Homes, to KUNC</span></p>
+      </div>
+      <figure style="margin:0">
+        <svg class="scene" viewBox="0 0 1000 470" role="img" aria-label="Illustration of a street of small homes below mountains, with the two homes at each end of the block marked as childcare homes with fenced yards">
+          <defs>
+            <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--sky)"/><stop offset="1" style="stop-color:var(--panel)"/></linearGradient>
+            <g id="hs"><rect x="0" y="40" width="90" height="70" style="fill:var(--house)"/><path d="M-8 44 L45 0 L98 44 Z" style="fill:var(--roof)"/><rect x="36" y="74" width="18" height="36" style="fill:var(--m2)"/><rect x="12" y="56" width="16" height="14" style="fill:var(--m1)"/><rect x="62" y="56" width="16" height="14" style="fill:var(--m1)"/></g>
+            <g id="cc"><rect x="0" y="34" width="120" height="86" style="fill:var(--house)"/><path d="M-10 38 L60 -12 L130 38 Z" style="fill:var(--th)"/><rect x="50" y="78" width="22" height="42" style="fill:var(--roof)"/><rect x="14" y="54" width="22" height="18" style="fill:var(--m1)"/><rect x="86" y="54" width="22" height="18" style="fill:var(--m1)"/><path d="M72 120 L104 120 L104 112 Z" style="fill:var(--m3)"/></g>
+            <g id="fn"><rect x="0" y="0" width="150" height="4" style="fill:var(--th)"/><rect x="0" y="16" width="150" height="4" style="fill:var(--th)"/><g style="fill:var(--th)"><rect x="0" y="-6" width="5" height="30"/><rect x="36" y="-6" width="5" height="30"/><rect x="72" y="-6" width="5" height="30"/><rect x="108" y="-6" width="5" height="30"/><rect x="145" y="-6" width="5" height="30"/></g></g>
+          </defs>
+          <rect width="1000" height="470" fill="url(#sk)"/>
+          <path d="M0 250 L120 120 L210 190 L330 60 L450 200 L560 110 L690 210 L800 90 L1000 240 L1000 330 L0 330 Z" style="fill:var(--m1)"/>
+          <path d="M330 60 L370 100 L345 98 L330 112 L312 94 L300 95 Z M800 90 L840 132 L815 128 L800 140 L785 124 L772 122 Z" style="fill:var(--panel)"/>
+          <path d="M0 300 L150 210 L300 280 L470 190 L640 280 L820 200 L1000 290 L1000 360 L0 360 Z" style="fill:var(--m2)"/>
+          <path d="M0 360 L1000 360 L1000 470 L0 470 Z" style="fill:var(--m3)"/>
+          <path d="M0 420 C200 405 400 440 600 420 S900 410 1000 425 L1000 470 L0 470 Z" style="fill:var(--tm);opacity:.55"/>
+          <use href="#cc" x="40" y="236"/><use href="#fn" x="25" y="338"/>
+          <use href="#hs" x="215" y="250"/><use href="#hs" x="335" y="250"/><use href="#hs" x="455" y="250"/><use href="#hs" x="575" y="250"/><use href="#hs" x="695" y="250"/>
+          <use href="#cc" x="830" y="236"/><use href="#fn" x="815" y="338"/>
+          <rect x="0" y="356" width="1000" height="10" style="fill:var(--roof)"/>
+        </svg>
+        <figcaption class="cap">Waterview, Ouray: 19 affordable homes plus two built for licensed in-home childcare, one at each end of the block. Illustration, not to scale.</figcaption>
+      </figure>
+    </div>
+
+    <div class="steps">
+      <div><b>Step 1 · Build it ready</b><h3>Homes pre-licensed for childcare</h3><p>The two homes were designed to meet state rules before anyone moved in: fencing, required square footage and a ramp so cribs can be carried out in an emergency. They still work as ordinary houses.</p></div>
+      <div><b>Step 2 · Train providers</b><h3>A free business course</h3><p>Bright Futures ran an evening course on starting a home childcare business. Six people began, three finished, and two were chosen after presenting business plans.</p></div>
+      <div><b>Step 3 · Make it affordable</b><h3>A lender buys, the provider rents</h3><p>Mission Driven Finance, a nonprofit lender, bought the two homes for $479,000 each and rents them to the providers below market, with an option to buy.</p></div>
+      <div><b>Step 4 · Open</b><h3>Two home daycares on one street</h3><p>Ouray Family Childcare opened in March 2025 and Tiny Colorado Treasures that spring. Each started with four children and can grow to 12, enough to quadruple the county's licensed home-based slots.</p></div>
+    </div>
+
+    <div class="honest">
+      <div>
+        <h3 style="font-size:20px;margin:0 0 8px">It isn't a finished fix</h3>
+        <p>Infant spots at one home have a waitlist of about three years. Rent rises every year, and one provider has pushed her plan to buy from two years to about four. Because the home is tied to the business, a provider whose business struggles could also lose her housing. Reporting on the project notes that the area's shortage still isn't solved.</p>
+      </div>
+      <div>
+        <p class="quote" style="margin-top:0">“Owning a home is within our reach now.”<span>Melissa McChristian, owner of Ouray Family Childcare, to the Ouray County Plaindealer</span></p>
+        <p>Rural Homes has similar developments with possible pre-licensed childcare underway in Louisville, Longmont and Grand Junction, and Steamboat Springs has shown interest. Ouray found its need through a local survey. CAREMap asks where else in the country the same two problems meet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="why">
+  <div class="wrap">
+    <h2>Why look at childcare and housing together</h2>
+    <p>Each shortage makes the other worse. CAREMap measures both because a fix for one alone can leave the other in place.</p>
+    <div class="why">
+      <div><span class="n">46%</span><p><b>of young children live in a childcare desert</b>, an area with three or more children 5 and under per licensed slot (2025). In rural communities it's over 70%, up from about 66% in 2018.</p></div>
+      <div><span class="n" id="whyRent">100%</span><p><b>of U.S. counties</b> where a year of 2-bedroom rent takes more than 30% of a childcare worker's median pay. The people who provide care often can't afford to live near the families who need it.</p></div>
+      <div><span class="n">96%</span><p><b>of family childcare home providers in Colorado</b> lack the money for building improvements or urgent repairs. A licensable home is a cost most new providers can't carry alone.</p></div>
+    </div>
+    <div class="loop" aria-label="How the two shortages feed each other">
+      <span>Providers can't afford local housing</span><i>→</i><span>Fewer home daycares open</span><i>→</i><span>Families can't find care</span><i>→</i><span>Parents leave work or leave town</span><i>→</i><span>Fewer workers, including providers</span>
+    </div>
+  </div>
+</section>
+
+<main class="band" id="candidates" style="padding-top:0">
+  <div class="wrap">
+    <section>
       <h2>The strongest candidates</h2>
-      <p>Ranked within their own group, because metro and rural counties differ on every measure. Stability is how often a county stays in its group's top quarter across 1,000 random weightings of the measures. Click a row to see it on the map.</p>
+      <p>Ranked within their own group, because metro and rural counties differ on every measure. Stability is how often a county stays in its group's top quarter across 1,000 random weightings of the measures. Fit is how many of four conditions behind the Ouray project the county meets (see Method). Click a row to see it on the map.</p>
       <div class="lists" id="lists"></div>
     </section>
   </div>
@@ -150,30 +276,108 @@ footer{border-top:1px solid var(--rule)}
   </div>
 </section>
 
-<section class="band">
-  <div class="wrap cols">
-    <div>
-      <h2>How the scores work</h2>
-      <p><b>Childcare score:</b> children under 5 per childcare worker (paid staff from County Business Patterns plus home-based solo providers from Nonemployer Statistics), smoothed for small counties, as a percentile within the county's group. Where the Census withholds a county's business count (0 to 2 businesses), it is scored under both 0 and 2 and the two are averaged.</p>
-      <p><b>Housing score:</b> half families (share of renters paying 30% or more of income; median home value to median income) and half providers (2-bedroom rent as a share of a childcare worker's pay), as a percentile within the group.</p>
-      <p><b>Priority:</b> High means both scores are in the group's top 25% whichever withheld-count assumption is used. Medium means the combined score (the geometric mean of the two, so a county must be high on both) is in the top 25%. Counties with fewer than 100 children under 5 are not scored.</p>
-    </div>
-    <div>
-      <h2>What it can't tell you</h2>
-      <p>Scores show where combined need is greatest, not where an intervention is proven to work. Childcare supply is measured in workers, not licensed slots, and is least reliable in rural counties whose business counts are withheld. County averages hide neighborhoods: Wayne County is one value here. College counties are flagged because student incomes inflate rent burden.</p>
-      <p class="small">Data: Census ACS 2020–2024 5-year, County Business Patterns 2023, Nonemployer Statistics 2023, Vintage 2025 population estimates, 2024 county boundaries; HUD FY2027 Fair Market Rents; BLS OEWS May 2025; USDA 2023 Rural-Urban Continuum Codes; Michigan MiLEAP child care licensing.</p>
+<section class="band" id="findings">
+  <div class="wrap">
+    <h2>What the checks found</h2>
+    <p>Beyond the ranking, three tests of what the map shows. Details are in notebooks 04 to 06 on GitHub.</p>
+    <div class="finds">
+      <div><span class="n">34 vs. 10</span><p><b>High counties sit next to each other 34 times,</b> against about 10 expected if they were scattered at random. The overlap bunches into a few regions: Texas into western Louisiana, the Southwest and Great Basin, and the southern Appalachians. A program could work across neighboring counties, not one at a time. Switch the map to <i>Hot spots</i> to see them.</p></div>
+      <div><span class="n">&minus;0.14</span><p><b>The two shortages don't travel together.</b> Across counties, childcare and housing scores are slightly opposed, and a county's childcare score has nothing to do with its neighbors' housing costs. Each shortage clusters on its own, so the overlap happens where two separate patterns cross. One problem can't stand in for the other; both have to be measured.</p></div>
+      <div><span class="n">9 of 106</span><p><b>High counties meet all four conditions behind the Ouray project.</b> Fit pulls against childcare need: counties with the worst shortages have the fewest people already providing care. In those places, the hardest part to copy would be recruiting and training providers, the job Ouray's early childhood council did, more than building the homes.</p></div>
     </div>
   </div>
 </section>
 
-<footer class="band"><div class="wrap small">CAREMap v1 · Built by Ric Hogerheide · Inspired by Rural Homes' housing designed around home-based childcare in Colorado</div></footer>
+<section class="band" id="cases" style="background:var(--panel);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)">
+  <div class="wrap">
+    <h2>Three counties up close</h2>
+    <p>Each was picked to test the map from a different angle, then checked against local reporting and county plans.</p>
+    <div class="cases">
+      <article class="card case" style="background:var(--bg)">
+        <h3>Maui County, HI</h3>
+        <div class="meta">Metro #2 · High · Fit: Weak</div>
+        <p class="verdict">Not a wildfire artifact.</p>
+        <p>The childcare figures come from March 2023, before the Lahaina fire, and a University of Hawai‘i count from 2022 agrees: 0.28 licensed seats per young child. Even with Maui's rent set back to its pre-fire level, Maui stays High (#3). The fire made both shortages worse afterward. But with population falling and the rebuild competing for land, builders and money, now is a poor time for an Ouray-style project.</p>
+        <button type="button" data-g="15009">See on the map</button>
+      </article>
+      <article class="card case" style="background:var(--bg)">
+        <h3>Archuleta County, CO</h3>
+        <div class="meta">Rural #3 · High · Fit: Possible</div>
+        <p class="verdict">The closest match to Ouray.</p>
+        <p>Pagosa Springs has 6 licensed infant spots for about 100 births a year, and its 2025 housing study calls for at least 1,316 new homes by 2035, with short-term rentals a big part of the squeeze. It already has an early childhood council and town and county funding for childcare. As in Ouray, the hard part would be finding providers: it has very few licensed home daycares.</p>
+        <button type="button" data-g="08007">See on the map</button>
+      </article>
+      <article class="card case" style="background:var(--bg)">
+        <h3>Lake County, MI</h3>
+        <div class="meta">Rural #56 · Medium · #1 in Michigan · Fit: Weak</div>
+        <p class="verdict">The overlap is real; the model would need adapting.</p>
+        <p>About two-thirds of Lake County's homes sit empty as seasonal cabins while year-round workers can't find housing, and 73% of its young children live in census tracts with no licensed provider or 3+ kids per slot. The county's housing plan already calls for modular homes and uses a land bank. But a typical home is about $134,000, so a local version would mean low-cost homes held as rentals for licensed providers, not new homes for sale.</p>
+        <button type="button" data-g="26085">See on the map</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="method">
+  <div class="wrap cols">
+    <div>
+      <h2>How the scores work</h2>
+      <p><b>Childcare score:</b> children under 5 per childcare worker (paid staff from County Business Patterns plus home-based solo providers from Nonemployer Statistics), smoothed for small counties, as a percentile within the county's group. Where the Census withholds a county's business count (0 to 2 businesses), it is scored as 0, the assumption that best matched Michigan's licensed slots, and checked again at 2.</p>
+      <p><b>Housing score:</b> half families (share of renters paying 30% or more of income; median home value to median income) and half providers (2-bedroom rent as a share of a childcare worker's pay), as a percentile within the group.</p>
+      <p><b>Priority:</b> High means both scores are in the group's top 25%. A High county that would drop out if its withheld count were 2 instead of 0 is shown as <i>High, unconfirmed</i> (striped). Medium means the combined score (the geometric mean of the two, so a county must be high on both) is in the top 25%. Counties with fewer than 100 children under 5 are not scored.</p>
+      <p><b>Fit</b> is a separate layer for High and Medium counties and never changes the ranking. It counts four conditions the Ouray project relied on: population holding or growing; a typical home worth at least $275,000, so new homes at Rural Homes' prices would sell below the market; a local pool of home-based providers; and a state license that lets a home grow to 12 children (2017 federal data). Strong = all four, Possible = three. Land, local approval, funding, a long-term owner and an early-childhood partner matter just as much but can only be checked locally. A fifth test, tight rental vacancy, was dropped because it failed Ouray County itself.</p>
+    </div>
+    <div>
+      <h2>What it can't tell you</h2>
+      <p>Scores show where combined need is greatest, not where an intervention is proven to work. Childcare supply is measured in workers, not licensed slots, and is least reliable in rural counties whose business counts are withheld. Fit uses a few national measures and can't see land, partners or local politics. County averages hide neighborhoods: Wayne County is one value here. College counties are flagged because student incomes inflate rent burden.</p>
+      <p class="small">Data: Census ACS 2020–2024 5-year, County Business Patterns 2023, Nonemployer Statistics 2023, Vintage 2025 population estimates, 2024 county boundaries; HUD FY2027 Fair Market Rents; BLS OEWS May 2025; USDA 2023 Rural-Urban Continuum Codes; Michigan MiLEAP child care licensing; ACF National Center on Early Childhood Quality Assurance group-home licensing study (2017).</p>
+    </div>
+  </div>
+</section>
+
+<footer class="band" id="about">
+  <div class="wrap cols">
+    <div>
+      <h2>About CAREMap</h2>
+      <p>CAREMap began after a Marketplace story about the Ouray homes raised a simple question: if housing built for childcare providers works there, where else could it help? It's an independent student project, not affiliated with Rural Homes or any organization named here.</p>
+      <p class="small">Code, data and notebooks: <a href="https://github.com/rhogerheide/caremap">github.com/rhogerheide/caremap</a></p>
+    </div>
+    <div>
+      <h2>Who built it</h2>
+      <p>I'm Ric Hogerheide, a Data Science and Economics student at Michigan State University (minor in Information Management) based in Detroit. I also work full-time on web and marketing technology at All Around Creative, building HubSpot and WordPress tools for clients. CAREMap is part of my data science portfolio: a project to turn public data into something a planner, funder or developer could actually use.</p>
+      <p class="small"><a href="https://www.linkedin.com/in/richogerheide/">LinkedIn</a> · <a href="https://github.com/rhogerheide">GitHub</a></p>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:28px;padding-top:20px;border-top:1px solid var(--rule)">
+    <h2 style="font-size:20px">Sources for the Ouray story, context and case studies</h2>
+    <ul class="srcs">
+        <li><a href="https://ouraynews.com/2024/11/14/two-needs-one-project">Ouray County Plaindealer, “Two needs, one project” (Nov. 2024)</a></li>
+        <li><a href="https://www.kunc.org/news/2026-02-02/heres-a-look-inside-one-colorado-towns-childcare-fix-putting-daycares-in-affordable-homes">KUNC, “One Colorado town's childcare fix” (Feb. 2026)</a></li>
+        <li><a href="https://www.marketplace.org/story/2026/02/27/in-this-colorado-town-affordable-housing-doubles-as-day-cares">Marketplace, “Affordable homes that double as day cares” (Feb. 2026)</a></li>
+        <li><a href="https://www.ffyf.org/2026/05/27/new-report-shows-nearly-half-of-all-young-children-live-in-child-care-deserts/">First Five Years Fund, on the Center for American Progress 2026 childcare deserts report</a></li>
+        <li><a href="https://www.chapinhall.org/research/evaluating-colorados-early-child-care-facilities-a-review-of-the-physical-state-of-properties-and-potential-for-expansion/">Chapin Hall, Colorado early child care facilities review</a></li>
+        <li><a href="https://researchconnections.org/sites/default/files/pdf/rc37767.pdf">ECQA Center, group child care home licensing in 2017 (2020)</a></li>
+        <li><a href="https://uhfamily.hawaii.edu/sites/uhfamily.hawaii.edu/files/publications/ECE-snapshot-Maui_2024.pdf">University of Hawai‘i Center on the Family, Maui County early care snapshot (2024)</a></li>
+        <li><a href="https://civilbeat.org/2023/11/lahaina-families-frustrated-over-lack-of-child-care-options/">Honolulu Civil Beat, Lahaina child care after the fire (Nov. 2023)</a></li>
+        <li><a href="https://analytics.uhero.hawaii.edu/maui-recovery-dashboard/housing-and-jobs/housing">UHERO Maui recovery dashboard: housing</a></li>
+        <li><a href="https://www.pagosasun.com/stories/early-childhood-council-of-archuleta-county-assesses-local-child-care-challenges,34513">Pagosa Springs SUN, Early Childhood Council of Archuleta County assessment (Apr. 2024)</a></li>
+        <li><a href="https://pagosadailypost.com/wp-content/uploads/2025/04/25-Housing-Needs-Assessment-sm.pdf">Archuleta County &amp; Town of Pagosa Springs, Regional Housing Needs Assessment (2025)</a></li>
+        <li><a href="https://closup.umich.edu/sites/closup/files/2025-09/CLOSUP-Fiscal%E2%80%93Lake%20County-Final.pdf">University of Michigan CLOSUP, Lake County case study (2025)</a></li>
+        <li><a href="https://lakecountymi.gov/wp-content/uploads/2026/02/LCHC-Strategic-Housing-Plan.pdf">Lake County Housing Coalition, Strategic Housing Plan 2025–2029</a></li>
+      </ul>
+  </div>
+</footer>
 
 <script>
 const PAYLOAD = __DATA__;
 const MIV = __MIV__;
 {
 const D = PAYLOAD.data, G = PAYLOAD.groups;
-const I = {name:0,st:1,grp:2,tier:3,cc:4,hs:5,comb:6,rank:7,stable:8,kids:9,rb:10,pti:11,prs:12,fmr:13,wage:14,kL:15,kH:16,pop:17,col:18,wh:19,wi:20,cf:21,tu:22,miCap:23,miKps:24,prP:25,rbP:26,ptiP:27};
+const I = {name:0,st:1,grp:2,tier:3,cc:4,hs:5,comb:6,rank:7,stable:8,kids:9,rb:10,pti:11,prs:12,fmr:13,wage:14,kL:15,kH:16,pop:17,col:18,wh:19,wi:20,cf:21,tu:22,miCap:23,miKps:24,prP:25,rbP:26,ptiP:27,hz:28,fit:29,fpts:30,f1:31,f2:32,f3:33,f4:34,lisa:35,hv:36};
+const FIT = {S:"Strong",P:"Possible",W:"Weak"};
+const LISA = {H:"Hot spot",C:"Cold spot",h:"High outlier",l:"Low outlier"};
+const tierCode = i => D[i][I.tier]==="H" && D[i][I.hz] ? "U" : D[i][I.tier];
+const tierText = i => tierCode(i)==="U" ? "High priority, unconfirmed" : TIER[D[i][I.tier]];
 const TIER = {H:"High priority",M:"Medium priority",L:"Low priority",N:"Not scored"};
 const GRP = {M:"metro",N:"rural (nonmetro)"};
 const ids = Object.keys(D);
@@ -182,21 +386,23 @@ const median = a => { const s=[...a].sort((x,y)=>x-y), m=s.length>>1; return s.l
 const label = id => `${D[id][I.name]}, ${D[id][I.st]}`;
 
 const nH = ids.filter(i=>D[i][I.tier]==="H").length, nM = ids.filter(i=>D[i][I.tier]==="M").length;
+const nU = ids.filter(i=>tierCode(i)==="U").length, nHS = ids.filter(i=>D[i][I.tier]==="H" && D[i][I.fit]==="S").length;
 const prs = ids.map(i=>D[i][I.prs]).filter(v=>v!=null);
 const burdened = prs.filter(v=>v>30).length / prs.length, half = prs.filter(v=>v>50).length / prs.length;
 const prsMed = median(prs);
 document.getElementById("title").textContent = `${nH} counties where childcare shortages and housing costs hit at once`;
 document.getElementById("figs").innerHTML = [
-  ["hot", fmt(nH), "High-priority counties: both problems in their group's top quarter"],
-  ["", fmt(nM), "more at Medium priority on the combined score"],
-  ["hot", `${Math.round(burdened*100)}%`, "of counties where 2-bedroom rent tops 30% of a childcare worker's pay"],
-  ["", `${Math.round(prsMed)}%`, "of pay that rent takes in the typical county"]
+  ["hot", fmt(nH-nU), "High-priority counties: both problems in their group's top quarter"],
+  ["", fmt(nU), "more High but unconfirmed: they rest on withheld Census business counts"],
+  ["", `${nHS} of ${nH}`, "High counties that look like a strong fit for an Ouray-style project"],
+  ["hot", `${Math.round(burdened*100)}%`, "of counties where 2-bedroom rent tops 30% of a childcare worker's pay"]
 ].map(([c,b,s])=>`<div class="${c}"><b>${b}</b><span>${s}</span></div>`).join("");
+document.getElementById("whyRent").textContent = `${Math.round(burdened*100)}%`;
 document.getElementById("prsText").textContent = `In ${Math.round(burdened*100)}% of the ${fmt(prs.length)} counties, a year of 2-bedroom rent costs more than 30% of a median-paid childcare worker's income, HUD's line for being cost-burdened. In the typical county it's ${Math.round(prsMed)}%, and in ${Math.round(half*100)}% of counties it's more than half. That gap is why the provider side carries half the housing score.`;
 
-const all = MIV.find(r=>r.key==="all"), met = MIV.find(r=>r.key==="metro"), wh = MIV.find(r=>r.key==="withheld");
-document.getElementById("miText").textContent = `Michigan publishes every licensed provider's capacity, so its ${all.counties} scored counties test whether a worker count stands in for real slots. The childcare score moves with licensed slots per child (rank correlation ${all.score.toFixed(2)}; ${met.score.toFixed(2)} in metro counties; negative is the right direction). It fails where the Census withholds business counts (${wh.score.toFixed(2)}, ${wh.counties} counties), which is why those counties show a range.`;
-document.getElementById("miTable").innerHTML = `<thead><tr><th>Michigan counties</th><th class="n">Counties</th><th class="n">Score vs. licensed slots</th></tr></thead><tbody>${MIV.map(r=>`<tr><td>${r.subset}</td><td class="n">${r.counties}</td><td class="n">${r.score.toFixed(2)}</td></tr>`).join("")}</tbody>`;
+const all = MIV.find(r=>r.key==="all"), wh = MIV.find(r=>r.key==="withheld");
+document.getElementById("miText").innerHTML = `Michigan publishes every licensed provider's capacity, so its ${all.counties} scored counties test whether a worker count stands in for real slots. Ranking them by young children per licensed slot and by children per worker gives a rank correlation of ${all.rho.toFixed(2)} (1 = the same order), and the two agree on ${all.overlap.replace(" of ", " of the ")} worst counties. Agreement drops to ${wh.rho.toFixed(2)} in the ${wh.counties} counties where the Census withholds business counts, which is why High counties that rest on that data are marked unconfirmed. Where they disagree, the worker count is usually off: school-run preschool staff, for example, are counted as school employees.<span class="small" style="display:block;margin-top:8px">The state's provider file lists each provider's county and capacity on the wrong row. County totals still add up, so only county totals are used here.</span>`;
+document.getElementById("miTable").innerHTML = `<thead><tr><th>Michigan counties</th><th class="n">Counties</th><th class="n">Agreement</th><th class="n">Worst quarter shared</th></tr></thead><tbody>${MIV.map(r=>`<tr><td>${r.subset}</td><td class="n">${r.counties}</td><td class="n">${r.rho.toFixed(2)}</td><td class="n">${r.overlap}</td></tr>`).join("")}</tbody>`;
 
 const NS = "http://www.w3.org/2000/svg";
 const svg = document.getElementById("svg"), cty = document.getElementById("cty"), st = document.getElementById("st"), sel = document.getElementById("sel");
@@ -207,17 +413,19 @@ cty.querySelectorAll("path").forEach(p=>pathOf[p.dataset.g]=p);
 document.getElementById("names").innerHTML = ids.map(i=>`<option value="${label(i)}">`).join("");
 
 const LAYERS = {
-  tier:{cls:i=>({H:"th",M:"tm",L:"tl",N:"tn"})[D[i][I.tier]], legend:[["th","High priority"],["tm","Medium"],["tl","Low"],["tn","Not scored (under 100 young children)"]]},
+  tier:{cls:i=>({H:"th",U:"thu",M:"tm",L:"tl",N:"tn"})[tierCode(i)], legend:[["th","High priority"],["thu","High, unconfirmed"],["tm","Medium"],["tl","Low"],["tn","Not scored (under 100 young children)"]]},
   cc:{cls:i=>q(D[i][I.cc],[25,50,75,90]), legend:[["q1","Bottom quarter"],["q2","25–50"],["q3","50–75"],["q4","75–90"],["q5","Top 10%: worst shortage"],["tn","Not scored"]]},
   hs:{cls:i=>q(D[i][I.hs],[25,50,75,90]), legend:[["q1","Bottom quarter"],["q2","25–50"],["q3","50–75"],["q4","75–90"],["q5","Top 10%: most pressure"],["tn","Not scored"]]},
-  prs:{cls:i=>q(D[i][I.prs],[40,50,60,75]), legend:[["q1","Under 40% of pay"],["q2","40–50%"],["q3","50–60%"],["q4","60–75%"],["q5","Over 75%"]]}
+  prs:{cls:i=>q(D[i][I.prs],[40,50,60,75]), legend:[["q1","Under 40% of pay"],["q2","40–50%"],["q3","50–60%"],["q4","60–75%"],["q5","Over 75%"]]},
+  fit:{cls:i=>({S:"fs",P:"fp",W:"fw"})[D[i][I.fit]] || "fx", legend:[["fs","Strong fit (4 of 4)"],["fp","Possible (3 of 4)"],["fw","Weak (0–2)"],["fx","Not High or Medium priority"]]},
+  lisa:{cls:i=>({H:"hot",h:"hout",l:"lout",C:"cold"})[D[i][I.lisa]] || "fx", legend:[["hot","Hot spot: high, with high neighbors"],["hout","High, neighbors not"],["lout","Low, neighbors high"],["cold","Cold spot"],["fx","No clear pattern, or no land neighbors"]]}
 };
 function q(v, cuts){ if (v==null) return "tn"; let k=0; while(k<cuts.length && v>=cuts[k]) k++; return "q"+(k+1); }
 let layer = "tier";
 function paint(){
   const L = LAYERS[layer];
   for (const g in pathOf) pathOf[g].setAttribute("class", D[g] ? L.cls(g) : "tn");
-  document.getElementById("legend").innerHTML = L.legend.map(([c,t])=>`<span><i style="background:var(--${c})"></i>${t}</span>`).join("");
+  document.getElementById("legend").innerHTML = L.legend.map(([c,t])=>`<span><i class="${c==="thu"?"hatch":""}" style="background:var(--${c})"></i>${t}</span>`).join("");
 }
 document.getElementById("layers").addEventListener("click", e=>{
   const b = e.target.closest("button"); if(!b) return;
@@ -258,7 +466,7 @@ const tip = document.getElementById("tip"), mapEl = document.getElementById("map
 cty.addEventListener("pointermove", e=>{
   const p = e.target.closest("path"); if (!p || !D[p.dataset.g] || e.pointerType==="touch") { tip.style.display="none"; return; }
   const r = mapEl.getBoundingClientRect(), g = p.dataset.g;
-  tip.textContent = `${label(g)} · ${TIER[D[g][I.tier]]}`;
+  tip.textContent = `${label(g)} · ${tierText(g)}${layer==="fit"&&D[g][I.fit]?` · ${FIT[D[g][I.fit]]} fit`:""}`;
   tip.style.display = "block";
   const x = Math.min(e.clientX-r.left+12, r.width-tip.offsetWidth-4);
   tip.style.left = x+"px"; tip.style.top = (e.clientY-r.top+14)+"px";
@@ -277,7 +485,10 @@ function select(g, zoomTo){
   const kpw = d[I.wh] ? `${fmt(d[I.kL])} – ${fmt(d[I.kH])}` : fmt(d[I.kL]);
   const flags = [];
   if (d[I.wh]) flags.push("The Census withholds this county's count of childcare businesses with staff (it has 0 to 2), so kids per worker is shown as a range.");
-  if (d[I.tu]) flags.push("Its priority depends on that withheld count; the lower tier is shown.");
+  if (d[I.hz]) flags.push("High only if that withheld count is 0. Treat it as unconfirmed until local data (such as state licensing records) checks it.");
+  else if (d[I.tu]) flags.push("Its priority would change if the withheld count were 2 instead of 0. The 0 estimate is shown, because it matched Michigan's licensed slots better.");
+  if (d[I.lisa]==="H") flags.push("Part of a hot spot: its neighbors also score high on the combined score.");
+  if (d[I.lisa]==="h") flags.push("High outlier: it scores high but its neighbors don't.");
   if (d[I.cf]) flags.push(`College county: ${fmt(d[I.col])}% of residents are enrolled, which can inflate rent burden.`);
   if (d[I.wi]) flags.push("BLS publishes no childcare wage for this area; the state's median is used.");
   if (scored && d[I.stable]!=null && d[I.stable]>=0.9) flags.push(`Robust: in its group's top quarter under ${Math.round(d[I.stable]*100)}% of 1,000 weightings.`);
@@ -289,15 +500,22 @@ function select(g, zoomTo){
     ["2-bedroom Fair Market Rent", d[I.fmr]==null?"–":"$"+fmt(d[I.fmr])+"/mo"],
     ["Childcare worker median pay", d[I.wage]==null?"–":"$"+fmt(d[I.wage])+"/yr"],
     ["Rent as share of that pay", d[I.prs]==null?"–":fmt(d[I.prs])+"%"],
-    ["Population change 2020–25", d[I.pop]==null?"–":(d[I.pop]>0?"+":"")+fmt(d[I.pop],1)+"%"]
+    ["Population change 2020–25", d[I.pop]==null?"–":(d[I.pop]>0?"+":"")+fmt(d[I.pop],1)+"%"],
+    ["Median home value", d[I.hv]==null?"–":"$"+fmt(d[I.hv])]
   ];
   if (d[I.miCap]!=null) rows.push(["Licensed childcare slots (MI)", fmt(d[I.miCap])], ["Young children per licensed slot", fmt(d[I.miKps],2)]);
   document.getElementById("sheet").innerHTML = `
     <h3>${d[I.name]}</h3>
     <div class="where">${d[I.st]} · ${GRP[d[I.grp]]} county${scored&&d[I.rank]?` · ranked ${fmt(d[I.rank])} of ${fmt(G[d[I.grp]==="M"?"Metro":"Nonmetro"])}`:""}</div>
-    <span class="badge ${d[I.tier]}">${TIER[d[I.tier]]}</span>
+    <span class="badge ${tierCode(g)}">${tierText(g)}</span>
     ${scored ? `<div class="rows">${bar("Childcare",d[I.cc])}${bar("Housing",d[I.hs])}${bar("Combined",d[I.comb])}</div>
     <p class="small" style="margin:0 0 6px">Percentiles within ${GRP[d[I.grp]]} counties; 100 = most need.</p>` : `<p class="small" style="margin:12px 0">Fewer than 100 children under 5, too few to score reliably.</p>`}
+    ${d[I.fit] ? `<div class="fitbox"><h4>Fit for an Ouray-style project: ${FIT[d[I.fit]]} (${d[I.fpts]} of 4)</h4><ul>
+      <li class="${d[I.f1]?"y":"n"}">Population holding or growing</li>
+      <li class="${d[I.f2]?"y":"n"}">Typical home worth $275k+ (new homes would sell below market)</li>
+      <li class="${d[I.f3]?"y":"n"}">A local pool of home-based providers</li>
+      <li class="${d[I.f4]?"y":"n"}">State license for homes of up to 12 children${d[I.f4]?"":" (check current rules)"}</li></ul>
+      <p class="small" style="margin:6px 0 0">Land, local approval, funding and partners can only be checked locally.</p></div>` : ""}
     <table><tbody>${rows.map(([k,v])=>`<tr><td>${k}</td><td class="n">${v}</td></tr>`).join("")}</tbody></table>
     ${flags.length?`<ul class="flags">${flags.map(f=>`<li>${f}</li>`).join("")}</ul>`:""}`;
 }
@@ -309,19 +527,23 @@ document.getElementById("q").addEventListener("change", e=>{
 
 function list(grp, title){
   const top = ids.filter(i=>D[i][I.grp]===grp && D[i][I.tier]!=="N").sort((a,b)=>D[a][I.rank]-D[b][I.rank]).slice(0,12);
-  return `<div class="card list"><h3>${title}</h3><div class="scroll"><table><thead><tr><th class="n">#</th><th>County</th><th class="n">Child&shy;care</th><th class="n">Hous&shy;ing</th><th class="n hide-s">Stable</th></tr></thead><tbody>${
-    top.map(i=>`<tr tabindex="0" data-g="${i}"><td class="n">${D[i][I.rank]}</td><td>${label(i)}${D[i][I.cf]?" *":""}</td><td class="n">${Math.round(D[i][I.cc])}</td><td class="n">${Math.round(D[i][I.hs])}</td><td class="n hide-s">${Math.round(D[i][I.stable]*100)}%</td></tr>`).join("")
+  return `<div class="card list"><h3>${title}</h3><div class="scroll"><table><thead><tr><th class="n">#</th><th>County</th><th class="n">Child&shy;care</th><th class="n">Hous&shy;ing</th><th class="n hide-s">Stable</th><th>Fit</th></tr></thead><tbody>${
+    top.map(i=>`<tr tabindex="0" data-g="${i}"><td class="n">${D[i][I.rank]}</td><td>${label(i)}${D[i][I.cf]?" *":""}${tierCode(i)==="U"?" †":""}</td><td class="n">${Math.round(D[i][I.cc])}</td><td class="n">${Math.round(D[i][I.hs])}</td><td class="n hide-s">${Math.round(D[i][I.stable]*100)}%</td><td>${D[i][I.fit]?`<span class="fitchip ${D[i][I.fit]}">${FIT[D[i][I.fit]]}</span>`:""}</td></tr>`).join("")
   }</tbody></table></div></div>`;
 }
 const lists = document.getElementById("lists");
 lists.innerHTML = list("M","Metro counties") + list("N","Rural counties");
-if (/\*/.test(lists.textContent)) lists.insertAdjacentHTML("afterend", `<p class="small" style="margin-top:8px">* College county: student incomes can inflate rent burden.</p>`);
+const notes = [];
+if (/\*/.test(lists.textContent)) notes.push("* College county: student incomes can inflate rent burden.");
+if (/†/.test(lists.textContent)) notes.push("† High, unconfirmed: rests on a withheld Census business count.");
+if (notes.length) lists.insertAdjacentHTML("afterend", `<p class="small" style="margin-top:8px">${notes.join(" ")}</p>`);
 const pick = e=>{ const r = e.target.closest("tr[data-g]"); if (!r) return; select(r.dataset.g, true); document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"}); };
 lists.addEventListener("click", pick);
 lists.addEventListener("keydown", e=>{ if (e.key==="Enter") pick(e); });
+document.getElementById("cases").addEventListener("click", e=>{ const b = e.target.closest("button[data-g]"); if (!b) return; select(b.dataset.g, true); document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"}); });
 
 paint();
-select(ids.filter(i=>D[i][I.tier]==="H").sort((a,b)=>D[b][I.comb]-D[a][I.comb])[0]);
+select(ids.filter(i=>tierCode(i)==="H").sort((a,b)=>D[b][I.comb]-D[a][I.comb])[0]);
 }
 </script>
 </body>
